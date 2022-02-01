@@ -4,6 +4,6 @@ Just a space for my Python and Micro Python projects. As I learn more about prog
 
 Using the RP2040 Pico, and various hardware addons. Which I'll list below:
 
-Pimoroni Pico Explorer Base
-Pimoroni BME680 Breakout
-Pimoroni LTR559 Breakout
+Pimoroni Pico Explorer Base,
+Pimoroni BME680 Breakout,
+Pimoroni LTR559 Breakout,
