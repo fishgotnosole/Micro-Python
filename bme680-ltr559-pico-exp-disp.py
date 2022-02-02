@@ -71,9 +71,4 @@ while True:
     
     display.update()
     time.sleep(.25)
-    
-    # Printing of values to terminal needs fixing to add light as well. Issues with formatting string (fstring)
-'''    
-    print("{:0.2f}c, {:0.2f}hPa, {:0.2f}%, {:0.2f} %, Heater: {}, Light: {}".format(temperature, pressurehpa, humidity, gas, heater, light))
-    print(str(light[BreakoutLTR559.LUX]))
-'''    
+       
