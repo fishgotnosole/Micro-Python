@@ -8,8 +8,8 @@ import utime
 import picoexplorer as display
 
 # Set up display
-width = 240
-height = 240
+width = display.get_width()
+height = display.get_height()
 display_buffer = bytearray(width * height * 2)  # 2-bytes per pixel (RGB565)
 display.init(display_buffer)
 
