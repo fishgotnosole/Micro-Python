@@ -1,21 +1,34 @@
 # based on initial code demo for the PiMoroni PicoDisplay for the RaspberyPiPico
 # Forked from SpiderMaf, https://github.com/SpiderMaf/PiPicoDsply/blob/main/brot.py
-# Have tired to use base 0/8/16/32/64/128 etc values where possible. 
+# Have tried to use base 0/8/16/32/64/128 etc values where possible. 
 # original comments left starting in lowercase
 
 # Import
 import utime
-import picoexplorer as display
+from picographics import PicoGraphics, DISPLAY_PICO_EXPLORER, PEN_RGB565
 
 # Set up display
-width = display.get_width()
-height = display.get_height()
-display_buffer = bytearray(width * height * 2)  # 2-bytes per pixel (RGB565)
-display.init(display_buffer)
+display = PicoGraphics(display=DISPLAY_PICO_EXPLORER, pen_type=PEN_RGB565)
+display.set_backlight(1.0)
+width, height = display.get_bounds()
+display.clear()
+
+#define pen colours here
+BLACK = display.create_pen(0, 0, 0)
+WHITE = display.create_pen(255, 255, 255)
+GREY = display.create_pen(192, 192, 192)
+RED = display.create_pen(255, 0, 0)
+YELLOW = display.create_pen(255, 255, 0)
+GREEN = display.create_pen(0, 224, 0)
+MIDBLUE = display.create_pen(0, 192, 224)
+BLUE = display.create_pen(0, 64, 255)
+DARKBLUE = display.create_pen(0, 0, 64)
+CYAN = display.create_pen(0, 255, 255)
+MAGENTA = display.create_pen(255, 0, 255)
 
 # Set the iteration count, in a whole number. Higher iteration values will yield longer compute/render times.
-# Low values will computer faster but less visual smoothness.
-iterations = 64
+# Low values will compute faster but with less visual qualty.
+iterations = 32
 
 # Define mandlebrot function
 def mandelbrot(c):
@@ -40,11 +53,11 @@ ImaginaryEnd = 1 * zoom
 
 # one of the issues on the video was it was displaying the old images whilst generating the new one.
 # so added the update below to send a clear screen to the display
-display.set_pen(0, 0, 0)
+display.set_pen(BLACK)
 display.clear()
 display.update()
 
-# Compute and display the mandlebrot fractal, in a fetching blue/black scheme
+# Compute and display the mandlebrot fractal, in a fetching Black, grey & white scheme
 for q in range(1):
         the_start = utime.ticks_ms()
         for x in range(0, width):
@@ -52,9 +65,12 @@ for q in range(1):
                 c = complex(RealStart + (x / width) * (RealEnd - RealStart), ImaginaryStart + (y / height) * (ImaginaryEnd - ImaginaryStart))
                 m = mandelbrot(c)
                 colour = 255 - int(m * 255 / iterations)
-                colour = display.set_pen(0, 0, colour)
+                PLOTBLUE = display.create_pen(colour, colour, colour)
+                colour = display.set_pen(PLOTBLUE)
                 display.pixel(x, y)
             display.update()
             the_end = utime.ticks_ms()
 
 print("Render stats:", (iterations), "iterations", (the_end - the_start) /1000, "secs")
+print("Render stats:", (iterations), "iterations", (the_end - the_start) /60000, "mins")
+
